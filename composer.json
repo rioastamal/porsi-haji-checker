@@ -1,0 +1,33 @@
+{
+    "name": "rioastamal/porsi-haji-checker",
+    "description": "Sebuah pustaka untuk mendapatkan informasi keberangkatan haji berdasarkan nomor porsi",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rio Astamal",
+            "email": "rio@rioastamal.net"
+        }
+    ],
+    "support": {
+        "email": "rio@rioastamal.net",
+        "source": "https://github.com/rioastamal/porsi-haji-checker"
+    },
+    "require": {
+        "php": "^5.5|^7.0",
+        "ext-bcmath": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RioAstamal\\Kemenag\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RioAstamal\\Kemenag\\Test\\": "tests/"
+        }
+    }
+}
