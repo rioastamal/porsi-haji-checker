@@ -55,7 +55,7 @@ class NomorHajiParserTest extends TestCase
         $this->assertTrue(strpos($json, 'HAMBA ALLAH') === false);
     }
 
-    public function testScrapperReturnError()
+    public function testScraperReturnError()
     {
         $this->scraper = $this->createMock(NomorHajiScraper::class);
         $this->scraper->method('getContents')

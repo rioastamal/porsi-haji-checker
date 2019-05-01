@@ -5,7 +5,7 @@
  *
  * <code>
  *   <?php
- *   use RioAstamal\Kemenag\NomorHajiChecker;
+ *   use RioAstamal\Kemenag\NomorHajiParser;
  *
  *   $scraper = NomorHajiscraper::create($config);
  *   $nomor = NomorHajiChecker::create($scraper);

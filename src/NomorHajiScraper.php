@@ -6,9 +6,9 @@
  * Langkah yang harus dilakukan untuk melakukan scrapping adalah:
  *
  * 1. GET request ke https://haji.kemenag.go.id/v3/node/955358
- * 2. Parse value dari "form_build_id" dan "form_id"
+ * 2. Parse value dari "form_build_id"
  * 3. Lakukan request ke halaman baru yang didapat dari header 'Location'
- * 4. Untuk parsing diserahkan ke class NomorHajiParse
+ * 4. Untuk parsing diserahkan ke class NomorHajiParser
  *
  * @author      Rio Astamal <rio@rioastamal.net>
  * @copyright   2019 Rio Astamal <rio@rioastamal.net>
