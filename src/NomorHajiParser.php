@@ -29,6 +29,8 @@
  * @license     MIT License <https://opensource.org/licenses/MIT>
  */
 namespace RioAstamal\Kemenag;
+use DomDocument;
+use DomXPath;
 
 class NomorHajiParser
 {
@@ -71,18 +73,17 @@ class NomorHajiParser
      */
     public function parse()
     {
-        $queries = [
-            'nomor_porsi' => '#Nomor Porsi</span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
-            'nama' => '#Nama: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            'kabupaten_kota' => '#Kabupaten/Kota: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            'provinsi' => '#Provinsi: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            'kuota' => '#Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+<strong class="field-content">(.*)</strong>#',
-            'posisi_porsi_kuota' => '#Posisi Porsi Pada Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
-            'perkiraan_tahun_berangkat_hijriah' => '#Perkiraan Berangkat Hijriah: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#',
-            'perkiraan_tahun_berangkat_masehi' => '#Perkiraan Berangkat Tahun Masehi: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#'
+        $json = [
+            'nomor_porsi' => '',
+            'nama' => '',
+            'kabupaten_kota' => '',
+            'provinsi' => '',
+            'kuota' => '',
+            'posisi_porsi_kuota' => '',
+            'perkiraan_tahun_berangkat_hijriah' => '',
+            'perkiraan_tahun_berangkat_masehi' => ''
         ];
 
-        $json = [];
         try {
             $contents = $this->scraper->getContents();
         } catch (\Exception $e) {
@@ -93,15 +94,26 @@ class NomorHajiParser
             return json_encode($json);
         }
 
-        foreach ($queries as $key => $regex) {
-            $json[$key] = '';
+        $dom = new DomDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->strictErrorChecking = false;
+        $dom->loadHtml($contents, LIBXML_NOERROR);
 
-            preg_match($regex, $contents, $matches);
-            if (!isset($matches[1])) {
-                continue;
-            }
+        $xpath = new DomXPath($dom);
+        $porsiNode = $xpath->query('//span[@class="views-label views-label-text-1"]/following-sibling::strong');
 
-            $json[$key] = trim($matches[1]);
+        if ($porsiNode->length === 0) {
+            return json_encode($json, JSON_PRETTY_PRINT);
+        }
+
+        $json['nomor_porsi'] = trim($porsiNode[0]->textContent);
+        $currentNode = $porsiNode[0]->parentNode;
+
+        foreach(array_keys($json) as $key) {
+            if ($key === 'nomor_porsi') { continue; }
+
+            $currentNode = $currentNode->nextSibling->nextSibling;
+            $json[$key] = trim($currentNode->childNodes[3]->textContent);
         }
 
         return json_encode($json, JSON_PRETTY_PRINT);
