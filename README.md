@@ -5,7 +5,7 @@
 
 ## Tentang
 
-Porsi Haji Checker adalah sebuah pustaka sederhana sekaligus utilitas berbasis Command-Line Interface (CLI) untuk melakukan pengecekan nomor porsi haji. Output yang dihasilkan berupa data JSON. Utilitas ini dapat dianggap adalah versi CLI dari halaman website [https://haji.kemenag.go.id/v3/node/955358](https://haji.kemenag.go.id/v3/node/955358). 
+Porsi Haji Checker adalah sebuah pustaka sederhana sekaligus utilitas berbasis Command-Line Interface (CLI) untuk melakukan pengecekan nomor porsi haji. Output yang dihasilkan berupa data JSON. Utilitas ini dapat dianggap adalah versi CLI dari halaman website [https://haji.kemenag.go.id/v3/node/955358](https://haji.kemenag.go.id/v3/node/955358).
 
 Berikut adalah cara penggunaan Porsi Haji Checker sebagai utilitas CLI.
 
@@ -33,13 +33,13 @@ Untuk instalasi Porsi Haji Checker dapat digunakan Composer atau download tarbal
 Pastikan `composer` sudah terinstal pada sistem anda. Lalu jalankan perintah berikut untuk menginstal.
 
 ```
-$ composer require rioastamal/porsi-haji-checker -vvv
+$ composer create-project -vvv rioastamal/porsi-haji-checker porsi-haji-checker
 ```
 
 Jika ingin menggunakan versi production tambahkan opsi `--no-dev`.
 
 ```
-$ composer require rioastamal/porsi-haji-checker -vvv --no-dev
+$ composer create-project -vvv --no-dev rioastamal/porsi-haji-checker porsi-haji-checker
 ```
 
 ### Manual
@@ -111,7 +111,7 @@ $parser = NomorHajiParser::create($scrapper);
 $jsonInfoPorsi = $parser->parse();
 print_r( json_decode($jsonInfoPorsi), JSON_OBJECT_AS_ARRAY );
 
-/* output 
+/* output
 Array
 (
     [nomor_porsi] => 3000837XXX
