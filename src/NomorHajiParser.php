@@ -74,14 +74,22 @@ class NomorHajiParser
     public function parse()
     {
         $queries = [
-            'nomor_porsi' => '//span[@class="views-label views-label-text-1"]/following-sibling::strong',
-            'nama' => '//span[@class="views-label views-label-text"]/following-sibling::strong',
-            'kabupaten_kota' => '//span[@class="views-label views-label-text-2"]/following-sibling::strong',
-            'provinsi' => '//span[@class="views-label views-label-text-3"]/following-sibling::strong',
-            'kuota' => '//span[@class="views-label views-label-text-4"]/following-sibling::strong',
-            'posisi_porsi_kuota' => '//span[@class="views-label views-label-text-5"]/following-sibling::strong',
-            'perkiraan_tahun_berangkat_hijriah' => '//span[@class="views-label views-label-text-6"]/following-sibling::strong',
-            'perkiraan_tahun_berangkat_masehi' => '//span[@class="views-label views-label-text-7"]/following-sibling::strong'
+            'nomor_porsi' => '#Nomor Porsi</span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
+            //span[@class="views-label views-label-text-1"]/following-sibling::strong',
+            'nama' => '#Nama: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
+            //span[@class="views-label views-label-text"]/following-sibling::strong',
+            'kabupaten_kota' => '#Kabupaten/Kota: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
+            // '//span[@class="views-label views-label-text-2"]/following-sibling::strong',
+            'provinsi' => '#Provinsi: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
+            // '//span[@class="views-label views-label-text-3"]/following-sibling::strong',
+            'kuota' => '#Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+<strong class="field-content">(.*)</strong>#',
+            // '//span[@class="views-label views-label-text-4"]/following-sibling::strong',
+            'posisi_porsi_kuota' => '#Posisi Porsi Pada Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
+            // '//span[@class="views-label views-label-text-5"]/following-sibling::strong',
+            'perkiraan_tahun_berangkat_hijriah' => '#Perkiraan Berangkat Hijriah: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#',
+            // '//span[@class="views-label views-label-text-6"]/following-sibling::strong',
+            'perkiraan_tahun_berangkat_masehi' => '#Perkiraan Berangkat Tahun Masehi: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#'
+            // '//span[@class="views-label views-label-text-7"]/following-sibling::strong'
         ];
 
         $json = [];
@@ -95,20 +103,15 @@ class NomorHajiParser
             return json_encode($json);
         }
 
-
-        $dom = new DomDocument();
-        $dom->loadHtml($contents, LIBXML_NOERROR);
-        $xpath = new DomXPath($dom);
-
-        foreach ($queries as $key => $query) {
+        foreach ($queries as $key => $regex) {
             $json[$key] = '';
 
-            $element = $xpath->query($query);
-            if ($element->length === 0) {
+            preg_match($regex, $contents, $matches);
+            if (!isset($matches[1])) {
                 continue;
             }
 
-            $json[$key] = $element[0]->nodeValue;
+            $json[$key] = trim($matches[1]);
         }
 
         return json_encode($json, JSON_PRETTY_PRINT);
