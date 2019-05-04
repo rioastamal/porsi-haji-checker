@@ -75,21 +75,13 @@ class NomorHajiParser
     {
         $queries = [
             'nomor_porsi' => '#Nomor Porsi</span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
-            //span[@class="views-label views-label-text-1"]/following-sibling::strong',
             'nama' => '#Nama: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            //span[@class="views-label views-label-text"]/following-sibling::strong',
             'kabupaten_kota' => '#Kabupaten/Kota: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            // '//span[@class="views-label views-label-text-2"]/following-sibling::strong',
             'provinsi' => '#Provinsi: </span>\s\s+?<strong class="field-content">(.*)</strong>#',
-            // '//span[@class="views-label views-label-text-3"]/following-sibling::strong',
             'kuota' => '#Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+<strong class="field-content">(.*)</strong>#',
-            // '//span[@class="views-label views-label-text-4"]/following-sibling::strong',
             'posisi_porsi_kuota' => '#Posisi Porsi Pada Kuota Provinsi/Kab/Kota/Khusus: </span>\s\s+?<strong class="field-content">([0-9]+)</strong>#',
-            // '//span[@class="views-label views-label-text-5"]/following-sibling::strong',
             'perkiraan_tahun_berangkat_hijriah' => '#Perkiraan Berangkat Hijriah: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#',
-            // '//span[@class="views-label views-label-text-6"]/following-sibling::strong',
             'perkiraan_tahun_berangkat_masehi' => '#Perkiraan Berangkat Tahun Masehi: </span>\s\s+<strong class="field-content">([0-9]+)</strong>#'
-            // '//span[@class="views-label views-label-text-7"]/following-sibling::strong'
         ];
 
         $json = [];
