@@ -9,8 +9,6 @@
  * @license     MIT License <https://opensource.org/licenses/MIT>
  */
 namespace RioAstamal\Kemenag;
-use DomDocument;
-use DomXpath;
 
 class NomorHajiScraper
 {
