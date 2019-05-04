@@ -1,0 +1,23 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - composer update --no-suggest --prefer-dist --no-interaction
+
+script:
+  - ./vendor/bin/phpunit --whitelist src/ --coverage-clover=coverage.xml --debug
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
