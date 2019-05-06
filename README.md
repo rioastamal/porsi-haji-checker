@@ -25,6 +25,8 @@ $ php bin/porsi-haji-checker.php 3000837XXX
 
 Porsi Haji Checker menggunakan Standard PHP Library (SPL) yaitu DOMDocument dan DOMXPath untuk melakukan parsing halaman HTML yang didapat dari website haji.kemenag.go.id.
 
+Demo tersedia di [https://porsihaji.rioastamal.net](https://porsihaji.rioastamal.net).
+
 ## Instalasi
 
 Untuk instalasi Porsi Haji Checker dapat digunakan Composer atau download tarball pada halaman Github.

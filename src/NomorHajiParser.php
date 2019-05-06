@@ -94,10 +94,11 @@ class NomorHajiParser
             return json_encode($json);
         }
 
+        libxml_use_internal_errors(true);
         $dom = new DomDocument();
         $dom->preserveWhiteSpace = false;
         $dom->strictErrorChecking = false;
-        $dom->loadHtml($contents, LIBXML_NOERROR);
+        $dom->loadHtml($contents, LIBXML_NOERROR | LIBXML_NOWARNING);
 
         $xpath = new DomXPath($dom);
         $porsiNode = $xpath->query('//span[@class="views-label views-label-text-1"]/following-sibling::strong');
@@ -106,14 +107,14 @@ class NomorHajiParser
             return json_encode($json, JSON_PRETTY_PRINT);
         }
 
-        $json['nomor_porsi'] = trim($porsiNode[0]->textContent);
-        $currentNode = $porsiNode[0]->parentNode;
+        $json['nomor_porsi'] = trim($porsiNode->item(0)->textContent);
+        $currentNode = $porsiNode->item(0)->parentNode;
 
         foreach(array_keys($json) as $key) {
             if ($key === 'nomor_porsi') { continue; }
 
             $currentNode = $currentNode->nextSibling->nextSibling;
-            $json[$key] = trim($currentNode->childNodes[3]->textContent);
+            $json[$key] = trim($currentNode->childNodes->item(3)->textContent);
         }
 
         return json_encode($json, JSON_PRETTY_PRINT);
